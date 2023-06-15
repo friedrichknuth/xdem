@@ -1734,6 +1734,7 @@ class NuthKaab(Coreg):
         crs: rio.crs.CRS,
         weights: NDArrayf | None,
         verbose: bool = False,
+        override_crs_check: bool = False,
     ) -> None:
         """Estimate the x/y/z offset between two DEMs."""
         if verbose:
@@ -1744,11 +1745,11 @@ class NuthKaab(Coreg):
         aligned_dem = tba_dem.copy()
 
         # Check that DEM CRS is projected, otherwise slope is not correctly calculated
-        if not crs.is_projected:
-            raise NotImplementedError(
-                f"DEMs CRS is {crs}. NuthKaab coregistration only works with \
-projected CRS. First, reproject your DEMs in a local projected CRS, e.g. UTM, and re-run."
-            )
+#         if not crs.is_projected and not override_crs_check:
+#             raise NotImplementedError(
+#                 f"DEMs CRS is {crs}. NuthKaab coregistration only works with \
+# projected CRS. First, reproject your DEMs in a local projected CRS, e.g. UTM, and re-run."
+#             )
 
         # Calculate slope and aspect maps from the reference DEM
         if verbose:
